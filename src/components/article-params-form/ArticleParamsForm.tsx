@@ -26,19 +26,13 @@ export const ArticleParamsForm = ({ onSubmit }: ArticleParamsFormProps) => {
 	const [isOpen, setIsOpen] = useState(false);
 	const [formState, setFormState] =
 		useState<ArticleStateType>(defaultArticleState);
-	const containerRef = useRef<HTMLElement>(null);
-	const arrowButtonRef = useRef<HTMLDivElement>(null);
+	const containerRef = useRef<HTMLDivElement>(null);
 
 	useEffect(() => {
 		const handleOutsideClick = (event: globalThis.MouseEvent) => {
 			const target = event.target as Node;
 
-			if (
-				containerRef.current &&
-				!containerRef.current.contains(target) &&
-				arrowButtonRef.current &&
-				!arrowButtonRef.current.contains(target)
-			) {
+			if (containerRef.current && !containerRef.current.contains(target)) {
 				setIsOpen(false);
 			}
 		};
@@ -65,12 +59,9 @@ export const ArticleParamsForm = ({ onSubmit }: ArticleParamsFormProps) => {
 	};
 
 	return (
-		<>
-			<div ref={arrowButtonRef}>
-				<ArrowButton isOpen={isOpen} onClick={handleArrowClick} />
-			</div>
+		<div ref={containerRef}>
+			<ArrowButton isOpen={isOpen} onClick={handleArrowClick} />
 			<aside
-				ref={containerRef}
 				className={clsx(styles.container, { [styles.container_open]: isOpen })}>
 				<form
 					className={styles.form}
@@ -126,6 +117,6 @@ export const ArticleParamsForm = ({ onSubmit }: ArticleParamsFormProps) => {
 					</div>
 				</form>
 			</aside>
-		</>
+		</div>
 	);
 };
