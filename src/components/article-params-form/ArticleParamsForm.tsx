@@ -29,6 +29,10 @@ export const ArticleParamsForm = ({ onSubmit }: ArticleParamsFormProps) => {
 	const containerRef = useRef<HTMLDivElement>(null);
 
 	useEffect(() => {
+		if (!isOpen) {
+			return;
+		}
+
 		const handleOutsideClick = (event: globalThis.MouseEvent) => {
 			const target = event.target as Node;
 
@@ -37,9 +41,7 @@ export const ArticleParamsForm = ({ onSubmit }: ArticleParamsFormProps) => {
 			}
 		};
 
-		if (isOpen) {
-			document.addEventListener('mousedown', handleOutsideClick);
-		}
+		document.addEventListener('mousedown', handleOutsideClick);
 
 		return () => {
 			document.removeEventListener('mousedown', handleOutsideClick);
@@ -102,9 +104,8 @@ export const ArticleParamsForm = ({ onSubmit }: ArticleParamsFormProps) => {
 							setFormState({ ...formState, backgroundColor })
 						}
 					/>
-					<RadioGroup
+					<Select
 						title='Ширина контента'
-						name='contentWidth'
 						options={contentWidthArr}
 						selected={formState.contentWidth}
 						onChange={(contentWidth) =>
